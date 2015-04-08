@@ -26,6 +26,20 @@ struct Node {
 };
 
 
+
+struct var {
+
+	char name[100];
+
+	double value;
+
+};
+
+
+struct var vars[1000];
+
+
+
 /* creates a new node and returns it */
 struct Node* make_node(int type, double value, char* id) {
   int i;
@@ -370,6 +384,218 @@ identifier: IDENTIFIER
 		  }
 
 %%
+
+ /*
+ * It will handle the node types that produce a value such as 
+ * identifiers, values, inputs, and arithmetic / logical operators. For 
+ * expression nodes that have children, it will need to recursively 
+ * evaluate those expressions. */
+double eval_expression(struct Node* node){
+/*Takes a parse tree node, and returns the value of the expression it 
+ * represents. 
+ */
+    int arg1, arg2 = 0;
+	switch(node->type){
+    	case VALUE: return node->value;
+    	case IDENTIFIER: return node->value;
+    	case INPUT: return node->value;
+   		case PLUS: 
+        	arg1 = eval_expression(node->children[0]);
+        	arg2 = eval_expression(node->children[1]);
+			return arg1 + arg2;
+   		case MINUS:
+        	arg1 = eval_expression(node->children[0]);
+        	arg2 = eval_expression(node->children[1]);
+			return arg1 - arg2;
+   		case DIVIDE:
+        	arg1 = eval_expression(node->children[0]);
+        	arg2 = eval_expression(node->children[1]);
+			return arg1 / arg2;
+   		case TIMES:
+        	arg1 = eval_expression(node->children[0]);
+        	arg2 = eval_expression(node->children[1]);
+			return arg1 * arg2;
+   		case LESS:
+        	arg1 = eval_expression(node->children[0]);
+        	arg2 = eval_expression(node->children[1]);
+			if (arg1 < arg2){
+				return 1;
+			}else{
+				return 0;
+			}
+   		case GREATER:
+        	arg1 = eval_expression(node->children[0]);
+        	arg2 = eval_expression(node->children[1]);
+			if (arg1 > arg2){
+				return 1;
+			}else{
+				return 0;
+			}
+   		case LESSEQ:
+        	arg1 = eval_expression(node->children[0]);
+        	arg2 = eval_expression(node->children[1]);
+			if (arg1 <= arg2){
+				return 1;
+			}else{
+				return 0;
+			}
+   		case GREATEREQ:
+        	arg1 = eval_expression(node->children[0]);
+        	arg2 = eval_expression(node->children[1]);
+			if (arg1 >= arg2){
+				return 1;
+			}else{
+				return 0;
+			}
+   		case EQUALS:   
+        	arg1 = eval_expression(node->children[0]);
+        	arg2 = eval_expression(node->children[1]);
+			if (arg1 == arg2){
+				return 1;
+			}else{
+				return 0;
+			}
+   		case NEQUALS:   
+        	arg1 = eval_expression(node->children[0]);
+        	arg2 = eval_expression(node->children[1]);
+			if (arg1 != arg2){
+				return 1;
+			}else{
+				return 0;
+			}
+   		case AND:   
+        	arg1 = eval_expression(node->children[0]);
+        	arg2 = eval_expression(node->children[1]);
+			if (arg1 && arg2){
+				return 1;
+			}else{
+				return 0;
+			}
+   		case OR:    
+        	arg1 = eval_expression(node->children[0]);
+        	arg2 = eval_expression(node->children[1]);
+			if (arg1 || arg2){
+				return 1;
+			}else{
+				return 0;
+			}
+   		case NOT:   
+        	arg1 = eval_expression(node->children[0]);
+			if (!arg1){
+				return 1;
+			}else{
+				return 0;
+			}
+   		case ASSIGN:
+        	arg1 = eval_expression(node->children[0]);
+        	arg2 = eval_expression(node->children[1]);
+			return arg1 = arg2;
+
+}
+
+
+
+
+
+
+
+
+void eval_statement(struct Node* node){
+
+	var currentVar = NULL;
+	for(int i=0; i <node->num_children; i++){
+ 		 switch(node->type) {//for every possible node type, find the value
+ 		   case IDENTIFIER:
+		   		currentVar->name = node->id;
+		   		currentVar->value = eval_expression(node);break;
+ 		   case VALUE: 
+		   		currentVar->value = eval_expression(node);break;
+ 		   case PLUS:
+		   		currentVar->value = eval_expression(node);break;
+ 		   case MINUS:
+		   		currentVar->value = eval_expression(node);break;
+ 		   case DIVIDE:
+		   		currentVar->value = eval_expression(node);break;
+ 		   case TIMES: 
+		   		currentVar->value = eval_expression(node);break;
+ 		   case LESS:
+		   		currentVar->value = eval_expression(node);break;
+ 		   case GREATER: 
+		   		currentVar->value = eval_expression(node);break;
+ 		   case LESSEQ:
+		   		currentVar->value = eval_expression(node);break;
+ 		   case GREATEREQ: 
+		   		currentVar->value = eval_expression(node);break;
+ 		   case EQUALS: 
+		   		currentVar->value = eval_expression(node);break;
+ 		   case NEQUALS: 
+		   		currentVar->value = eval_expression(node);break;
+ 		   case AND: 
+		   		currentVar->value = eval_expression(node);break;
+ 		   case OR: 
+		   		currentVar->value = eval_expression(node);break;
+ 		   case NOT: 
+		   		currentVar->value = eval_expression(node);break;
+ 		   case ASSIGN: 
+		   		eval_expression(node);break;
+ 		   case IF: 
+		   		eval_statement(node->children[0]);
+				if(node->children[1]){
+					eval_statement(node->children[1]);
+					if(node->children[2]){
+					//not sure if i should only put this after if
+						eval_statement(node->children[2]);
+					}
+				}
+ 		   case WHILE: 
+		   		eval_statement(node->children[0]);
+				if(node->children[1]){
+					eval_statement(node->children[1]);
+					if(node->children[2]){
+					//not sure if i should only put this after if
+						eval_statement(node->children[2]);
+					}
+				}
+ 		   case PRINT: 
+		   		eval_statement(node->children[0]);
+				if(node->children[1]){
+					eval_statement(node->children[1]);
+					if(node->children[2]){
+					//not sure if i should only put this after if
+						eval_statement(node->children[2]);
+					}
+				}
+ 		   case INPUT: 
+ 		   case STATEMENT: //for each existing child, evaluate it
+		   		eval_statement(node->children[0]);
+				if(node->children[1]){
+					eval_statement(node->children[1]);
+					if(node->children[2]){
+					//not sure if i should only put this after if
+						eval_statement(node->children[2]);
+					}
+				}
+
+
+ 		   default:
+ 		     printf("Error, %d not a valid node type.\n", node->type);
+ 		     exit(1);
+		}
+		vars[i] = currentVar;
+	}
+}
+
+
+/*Takes a parse tree node, and evaluates the statement it represents. 
+ * Most of the statement types contain statements and/or expressions as 
+ * children nodes. These will have to be handled recursively. */
+                                                                
+
+
+
+
+
+
 void print_tree(struct Node* node, int tabs) {
   int i;
   if(debug==1)printf("entering print tree \n");	
@@ -416,7 +642,7 @@ void print_tree(struct Node* node, int tabs) {
 
   /* print all children nodes underneath */
   for(i = 0; i < node->num_children; i++) {
- if(debug==1) 	printf("in for at element %d \n", i );
+ 	if(debug==1){printf("in for at element %d \n", i );}
     print_tree(node->children[i], tabs + 1);
   }
 }
@@ -432,11 +658,12 @@ void yyerror(const char* str) {
 int main(int argc, char* argv[])
 { 
 
-	if(debug==1)	printf("In main \n");
-	if(!argv[1]) printf("No file entered \n"); return 0;
-	    stdin = fopen(argv[1], "r");    
+	if(debug==1){printf("In main \n");}
+	if(!argv[1]){printf("No file entered \n"); return 0;}
+	stdin = fopen(argv[1], "r");    
 	yyparse();
 	print_tree(tree, 1);// (tree to feed in, num tabs it will print out with) 
-if(debug==1)	printf("leaving main \n");
+	eval_statement(tree);
+	if(debug==1){printf("leaving main \n");}
 	return 0; 
 }
