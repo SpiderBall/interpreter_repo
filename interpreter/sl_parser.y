@@ -36,7 +36,7 @@ struct var {
 };
 
 
-struct var vars[1000];
+struct var *vars[1000];
 
 
 
@@ -398,7 +398,7 @@ double eval_expression(struct Node* node){
 	switch(node->type){
     	case VALUE: return node->value;
     	case IDENTIFIER: return node->value;
-    	case INPUT: return node->value;
+    	case INPUT: return node->value;//need to read in user input somehow
    		case PLUS: 
         	arg1 = eval_expression(node->children[0]);
         	arg2 = eval_expression(node->children[1]);
@@ -485,12 +485,12 @@ double eval_expression(struct Node* node){
 				return 1;
 			}else{
 				return 0;
-			}
-   		case ASSIGN:
-        	arg1 = eval_expression(node->children[0]);
-        	arg2 = eval_expression(node->children[1]);
-			return arg1 = arg2;
+			}	
 
+ 		 default:
+ 		    printf("Error, %d not a valid node type.\n", node->type);
+ 		    exit(1);
+	}
 }
 
 
@@ -501,87 +501,38 @@ double eval_expression(struct Node* node){
 
 
 void eval_statement(struct Node* node){
-
-	var currentVar = NULL;
-	for(int i=0; i <node->num_children; i++){
+	int i, j = 0;
+	struct var *currentVar;
+	for(i=0; i <node->num_children; i++){
  		 switch(node->type) {//for every possible node type, find the value
  		   case IDENTIFIER:
-		   		currentVar->name = node->id;
-		   		currentVar->value = eval_expression(node);break;
- 		   case VALUE: 
-		   		currentVar->value = eval_expression(node);break;
- 		   case PLUS:
-		   		currentVar->value = eval_expression(node);break;
- 		   case MINUS:
-		   		currentVar->value = eval_expression(node);break;
- 		   case DIVIDE:
-		   		currentVar->value = eval_expression(node);break;
- 		   case TIMES: 
-		   		currentVar->value = eval_expression(node);break;
- 		   case LESS:
-		   		currentVar->value = eval_expression(node);break;
- 		   case GREATER: 
-		   		currentVar->value = eval_expression(node);break;
- 		   case LESSEQ:
-		   		currentVar->value = eval_expression(node);break;
- 		   case GREATEREQ: 
-		   		currentVar->value = eval_expression(node);break;
- 		   case EQUALS: 
-		   		currentVar->value = eval_expression(node);break;
- 		   case NEQUALS: 
-		   		currentVar->value = eval_expression(node);break;
- 		   case AND: 
-		   		currentVar->value = eval_expression(node);break;
- 		   case OR: 
-		   		currentVar->value = eval_expression(node);break;
- 		   case NOT: 
-		   		currentVar->value = eval_expression(node);break;
+				for(j = 0; j <sizeof(node->id); j++){
+		   			currentVar->name[j] = node->id[j];}//this is here so that the name can be stored in the vars array
+			   	currentVar->value = eval_expression(node);break;
  		   case ASSIGN: 
-		   		eval_expression(node);break;
+				for(i = 0; i<node->num_children; i++){
+					eval_statement(node->children[i]);
+				}
+
  		   case IF: 
-		   		eval_statement(node->children[0]);
-				if(node->children[1]){
-					eval_statement(node->children[1]);
-					if(node->children[2]){
-					//not sure if i should only put this after if
-						eval_statement(node->children[2]);
-					}
+				for(i = 0; i<node->num_children; i++){
+					eval_statement(node->children[i]);
 				}
  		   case WHILE: 
-		   		eval_statement(node->children[0]);
-				if(node->children[1]){
-					eval_statement(node->children[1]);
-					if(node->children[2]){
-					//not sure if i should only put this after if
-						eval_statement(node->children[2]);
-					}
+				for(i = 0; i<node->num_children; i++){
+					eval_statement(node->children[i]);
 				}
- 		   case PRINT: 
-		   		eval_statement(node->children[0]);
-				if(node->children[1]){
-					eval_statement(node->children[1]);
-					if(node->children[2]){
-					//not sure if i should only put this after if
-						eval_statement(node->children[2]);
-					}
-				}
- 		   case INPUT: 
+ 		   case PRINT://should only have one child? and it should always be an expression?
+				currentVar->value = eval_expression(node->children[0]);
+				printf(currentVar->value);
  		   case STATEMENT: //for each existing child, evaluate it
-		   		eval_statement(node->children[0]);
-				if(node->children[1]){
-					eval_statement(node->children[1]);
-					if(node->children[2]){
-					//not sure if i should only put this after if
-						eval_statement(node->children[2]);
-					}
+				for(i = 0; i<node->num_children; i++){
+					eval_statement(node->children[i]);
 				}
-
-
- 		   default:
- 		     printf("Error, %d not a valid node type.\n", node->type);
- 		     exit(1);
+		   default:
+			   	currentVar->value = eval_expression(node);break;
 		}
-		vars[i] = currentVar;
+		vars[i] = currentVar;//stores anything saved as the currentVar in the vars array
 	}
 }
 

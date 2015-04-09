@@ -90,6 +90,20 @@ struct Node {
 };
 
 
+
+struct var {
+
+	char name[100];
+
+	double value;
+
+};
+
+
+struct var *vars[1000];
+
+
+
 /* creates a new node and returns it */
 struct Node* make_node(int type, double value, char* id) {
   int i;
@@ -122,7 +136,7 @@ void attach_node(struct Node* parent, struct Node* child) {
 struct Node* tree;
 
 
-#line 126 "sl_parser.tab.c" /* yacc.c:339  */
+#line 140 "sl_parser.tab.c" /* yacc.c:339  */
 
 # ifndef YY_NULLPTR
 #  if defined __cplusplus && 201103L <= __cplusplus
@@ -193,10 +207,10 @@ extern int yydebug;
 typedef union YYSTYPE YYSTYPE;
 union YYSTYPE
 {
-#line 65 "sl_parser.y" /* yacc.c:355  */
+#line 79 "sl_parser.y" /* yacc.c:355  */
  char* char_array; struct Node * node; double Double;
 
-#line 200 "sl_parser.tab.c" /* yacc.c:355  */
+#line 214 "sl_parser.tab.c" /* yacc.c:355  */
 };
 # define YYSTYPE_IS_TRIVIAL 1
 # define YYSTYPE_IS_DECLARED 1
@@ -211,7 +225,7 @@ int yyparse (void);
 
 /* Copy the second part of user declarations.  */
 
-#line 215 "sl_parser.tab.c" /* yacc.c:358  */
+#line 229 "sl_parser.tab.c" /* yacc.c:358  */
 
 #ifdef short
 # undef short
@@ -508,11 +522,11 @@ static const yytype_uint8 yytranslate[] =
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_uint16 yyrline[] =
 {
-       0,   102,   102,   103,   104,   105,   106,   107,   113,   117,
-     122,   129,   136,   143,   151,   158,   165,   174,   182,   189,
-     197,   204,   211,   218,   225,   232,   238,   245,   251,   259,
-     266,   276,   294,   304,   313,   320,   330,   338,   344,   350,
-     359,   366
+       0,   116,   116,   117,   118,   119,   120,   121,   127,   131,
+     136,   143,   150,   157,   165,   172,   179,   188,   196,   203,
+     211,   218,   225,   232,   239,   246,   252,   259,   265,   273,
+     280,   290,   308,   318,   327,   334,   344,   352,   358,   364,
+     373,   380
 };
 #endif
 
@@ -1332,119 +1346,119 @@ yyreduce:
   switch (yyn)
     {
         case 2:
-#line 102 "sl_parser.y" /* yacc.c:1646  */
+#line 116 "sl_parser.y" /* yacc.c:1646  */
     { (yyval.node)=(yyvsp[0].node);}
-#line 1338 "sl_parser.tab.c" /* yacc.c:1646  */
+#line 1352 "sl_parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 3:
-#line 103 "sl_parser.y" /* yacc.c:1646  */
+#line 117 "sl_parser.y" /* yacc.c:1646  */
     { (yyval.node)=(yyvsp[0].node);}
-#line 1344 "sl_parser.tab.c" /* yacc.c:1646  */
+#line 1358 "sl_parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 4:
-#line 104 "sl_parser.y" /* yacc.c:1646  */
+#line 118 "sl_parser.y" /* yacc.c:1646  */
     { (yyval.node)=(yyvsp[0].node);}
-#line 1350 "sl_parser.tab.c" /* yacc.c:1646  */
+#line 1364 "sl_parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 5:
-#line 105 "sl_parser.y" /* yacc.c:1646  */
+#line 119 "sl_parser.y" /* yacc.c:1646  */
     { (yyval.node)=(yyvsp[0].node);}
-#line 1356 "sl_parser.tab.c" /* yacc.c:1646  */
+#line 1370 "sl_parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 6:
-#line 106 "sl_parser.y" /* yacc.c:1646  */
+#line 120 "sl_parser.y" /* yacc.c:1646  */
     { (yyval.node)=(yyvsp[0].node);}
-#line 1362 "sl_parser.tab.c" /* yacc.c:1646  */
+#line 1376 "sl_parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 7:
-#line 107 "sl_parser.y" /* yacc.c:1646  */
+#line 121 "sl_parser.y" /* yacc.c:1646  */
     { (yyval.node)=(yyvsp[0].node);}
-#line 1368 "sl_parser.tab.c" /* yacc.c:1646  */
+#line 1382 "sl_parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 8:
-#line 113 "sl_parser.y" /* yacc.c:1646  */
+#line 127 "sl_parser.y" /* yacc.c:1646  */
     {
 		  if(debug==1) printf("paren_expr\n");
 		  (yyval.node)=(yyvsp[-1].node);
 		  }
-#line 1377 "sl_parser.tab.c" /* yacc.c:1646  */
+#line 1391 "sl_parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 9:
-#line 117 "sl_parser.y" /* yacc.c:1646  */
+#line 131 "sl_parser.y" /* yacc.c:1646  */
     {
 		  if(debug==1) printf("going up to value\n");
 		  (yyval.node) = (yyvsp[0].node);
 		  }
-#line 1386 "sl_parser.tab.c" /* yacc.c:1646  */
+#line 1400 "sl_parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 10:
-#line 123 "sl_parser.y" /* yacc.c:1646  */
+#line 137 "sl_parser.y" /* yacc.c:1646  */
     {
 				if(debug==1)printf("identifier");
 				(yyval.node)=(yyvsp[0].node);
 			}
-#line 1395 "sl_parser.tab.c" /* yacc.c:1646  */
+#line 1409 "sl_parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 11:
-#line 130 "sl_parser.y" /* yacc.c:1646  */
+#line 144 "sl_parser.y" /* yacc.c:1646  */
     {
 						if(debug==1)printf("not_expr\n");
 						(yyval.node) = make_node(NOT, 0, "");
 						attach_node((yyval.node), (yyvsp[0].node));  
 						/* not should always be to the left of a statement*/
 					}
-#line 1406 "sl_parser.tab.c" /* yacc.c:1646  */
+#line 1420 "sl_parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 12:
-#line 136 "sl_parser.y" /* yacc.c:1646  */
+#line 150 "sl_parser.y" /* yacc.c:1646  */
     {
 				if(debug==1)printf("going up\n");
 				(yyval.node) = (yyvsp[0].node);}
-#line 1414 "sl_parser.tab.c" /* yacc.c:1646  */
+#line 1428 "sl_parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 13:
-#line 144 "sl_parser.y" /* yacc.c:1646  */
+#line 158 "sl_parser.y" /* yacc.c:1646  */
     {
 						if(debug==1)printf("mult_expr\n");
 						(yyval.node)=make_node(TIMES, 0, "");
 						attach_node((yyval.node), (yyvsp[-2].node));
 						attach_node((yyval.node), (yyvsp[0].node));
 					}
-#line 1425 "sl_parser.tab.c" /* yacc.c:1646  */
+#line 1439 "sl_parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 14:
-#line 152 "sl_parser.y" /* yacc.c:1646  */
+#line 166 "sl_parser.y" /* yacc.c:1646  */
     {
 						if(debug==1)printf("div_expr\n");
 						(yyval.node)=make_node(DIVIDE, 0, "");
 						attach_node((yyval.node), (yyvsp[-2].node));
 						attach_node((yyval.node), (yyvsp[0].node));
 					}
-#line 1436 "sl_parser.tab.c" /* yacc.c:1646  */
+#line 1450 "sl_parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 15:
-#line 158 "sl_parser.y" /* yacc.c:1646  */
+#line 172 "sl_parser.y" /* yacc.c:1646  */
     {
 				if(debug==1)printf("going up\n");
 				(yyval.node) = (yyvsp[0].node);}
-#line 1444 "sl_parser.tab.c" /* yacc.c:1646  */
+#line 1458 "sl_parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 16:
-#line 166 "sl_parser.y" /* yacc.c:1646  */
+#line 180 "sl_parser.y" /* yacc.c:1646  */
     {
 
 						if(debug==1)printf("plus_expr\n");
@@ -1453,123 +1467,123 @@ yyreduce:
 						attach_node((yyval.node), (yyvsp[0].node));
 
 					}
-#line 1457 "sl_parser.tab.c" /* yacc.c:1646  */
+#line 1471 "sl_parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 17:
-#line 176 "sl_parser.y" /* yacc.c:1646  */
+#line 190 "sl_parser.y" /* yacc.c:1646  */
     {
 						if(debug==1)printf("min_expr\n");
 						(yyval.node)=make_node(MINUS, 0, "");
 						attach_node((yyval.node), (yyvsp[-2].node));
 						attach_node((yyval.node), (yyvsp[0].node));
 					}
-#line 1468 "sl_parser.tab.c" /* yacc.c:1646  */
+#line 1482 "sl_parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 18:
-#line 182 "sl_parser.y" /* yacc.c:1646  */
+#line 196 "sl_parser.y" /* yacc.c:1646  */
     {
 			if(debug==1)	printf("going up\n");
 				(yyval.node) = (yyvsp[0].node);}
-#line 1476 "sl_parser.tab.c" /* yacc.c:1646  */
+#line 1490 "sl_parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 19:
-#line 190 "sl_parser.y" /* yacc.c:1646  */
+#line 204 "sl_parser.y" /* yacc.c:1646  */
     {
 						if(debug==1)printf("greater\n");
 						(yyval.node)=make_node(GREATER, 0, "");
 						attach_node((yyval.node), (yyvsp[-2].node));
 						attach_node((yyval.node), (yyvsp[0].node));
 					}
-#line 1487 "sl_parser.tab.c" /* yacc.c:1646  */
+#line 1501 "sl_parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 20:
-#line 198 "sl_parser.y" /* yacc.c:1646  */
+#line 212 "sl_parser.y" /* yacc.c:1646  */
     {
 						if(debug==1)printf("less\n");
 						(yyval.node)=make_node(LESS, 0, "");
 						attach_node((yyval.node), (yyvsp[-2].node));
 						attach_node((yyval.node), (yyvsp[0].node));
 					}
-#line 1498 "sl_parser.tab.c" /* yacc.c:1646  */
+#line 1512 "sl_parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 21:
-#line 205 "sl_parser.y" /* yacc.c:1646  */
+#line 219 "sl_parser.y" /* yacc.c:1646  */
     {
 						if(debug==1)printf("greatereq\n");
 						(yyval.node)=make_node(GREATEREQ, 0, "");
 						attach_node((yyval.node), (yyvsp[-2].node));
 						attach_node((yyval.node), (yyvsp[0].node));
 					}
-#line 1509 "sl_parser.tab.c" /* yacc.c:1646  */
+#line 1523 "sl_parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 22:
-#line 212 "sl_parser.y" /* yacc.c:1646  */
+#line 226 "sl_parser.y" /* yacc.c:1646  */
     {
 						if(debug==1)printf("lesseq\n");
 						(yyval.node)=make_node(LESSEQ, 0, "");
 						attach_node((yyval.node), (yyvsp[-2].node));
 						attach_node((yyval.node), (yyvsp[0].node));
 					}
-#line 1520 "sl_parser.tab.c" /* yacc.c:1646  */
+#line 1534 "sl_parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 23:
-#line 219 "sl_parser.y" /* yacc.c:1646  */
+#line 233 "sl_parser.y" /* yacc.c:1646  */
     {
 						if(debug==1)printf("equals\n");
 						(yyval.node)=make_node(EQUALS, 0, "");
 						attach_node((yyval.node), (yyvsp[-2].node));
 						attach_node((yyval.node), (yyvsp[0].node));
 					}
-#line 1531 "sl_parser.tab.c" /* yacc.c:1646  */
+#line 1545 "sl_parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 24:
-#line 226 "sl_parser.y" /* yacc.c:1646  */
+#line 240 "sl_parser.y" /* yacc.c:1646  */
     {
 						if(debug==1)printf("nequals\n");
 						(yyval.node)=make_node(NEQUALS, 0, "");
 						attach_node((yyval.node), (yyvsp[-2].node));
 						attach_node((yyval.node), (yyvsp[0].node));
 					}
-#line 1542 "sl_parser.tab.c" /* yacc.c:1646  */
+#line 1556 "sl_parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 25:
-#line 232 "sl_parser.y" /* yacc.c:1646  */
+#line 246 "sl_parser.y" /* yacc.c:1646  */
     {
 				if(debug==1)printf("going up\n");
 				(yyval.node) = (yyvsp[0].node);}
-#line 1550 "sl_parser.tab.c" /* yacc.c:1646  */
+#line 1564 "sl_parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 26:
-#line 239 "sl_parser.y" /* yacc.c:1646  */
+#line 253 "sl_parser.y" /* yacc.c:1646  */
     {
 					if(debug==1)printf("and\n");
 					(yyval.node) = make_node(AND, 0, "");
 					attach_node((yyval.node), (yyvsp[-2].node));
 					attach_node((yyval.node), (yyvsp[0].node));
 				}
-#line 1561 "sl_parser.tab.c" /* yacc.c:1646  */
+#line 1575 "sl_parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 27:
-#line 245 "sl_parser.y" /* yacc.c:1646  */
+#line 259 "sl_parser.y" /* yacc.c:1646  */
     {
 			if(debug==1)printf("going up\n");
 			(yyval.node)=(yyvsp[0].node);}
-#line 1569 "sl_parser.tab.c" /* yacc.c:1646  */
+#line 1583 "sl_parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 28:
-#line 252 "sl_parser.y" /* yacc.c:1646  */
+#line 266 "sl_parser.y" /* yacc.c:1646  */
     { 
 					if(debug==1)printf("or\n");
 					(yyval.node) = make_node(OR, 0, "");
@@ -1577,30 +1591,30 @@ yyreduce:
 					attach_node((yyval.node), (yyvsp[0].node));
 
 				}
-#line 1581 "sl_parser.tab.c" /* yacc.c:1646  */
+#line 1595 "sl_parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 29:
-#line 259 "sl_parser.y" /* yacc.c:1646  */
+#line 273 "sl_parser.y" /* yacc.c:1646  */
     {
 			if(debug==1)printf("going up\n");
 			(yyval.node) = (yyvsp[0].node);}
-#line 1589 "sl_parser.tab.c" /* yacc.c:1646  */
+#line 1603 "sl_parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 30:
-#line 267 "sl_parser.y" /* yacc.c:1646  */
+#line 281 "sl_parser.y" /* yacc.c:1646  */
     {
 					if(debug==1)printf("if\n");
 					(yyval.node) = make_node(IF, 0, "");
 					attach_node((yyval.node), (yyvsp[-2].node));
 					attach_node((yyval.node), (yyvsp[0].node));
 				}
-#line 1600 "sl_parser.tab.c" /* yacc.c:1646  */
+#line 1614 "sl_parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 31:
-#line 277 "sl_parser.y" /* yacc.c:1646  */
+#line 291 "sl_parser.y" /* yacc.c:1646  */
     {
 					fflush(stdout);
 					if(debug==1)printf("assign\n");
@@ -1616,11 +1630,11 @@ yyreduce:
 					if(debug==1)printf("attached or");
 					fflush(stdout);
 				}
-#line 1620 "sl_parser.tab.c" /* yacc.c:1646  */
+#line 1634 "sl_parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 32:
-#line 295 "sl_parser.y" /* yacc.c:1646  */
+#line 309 "sl_parser.y" /* yacc.c:1646  */
     {
 					if(debug==1)printf("ifelse\n");
 					(yyval.node) = make_node(IF, 0, "");
@@ -1628,99 +1642,99 @@ yyreduce:
 					attach_node((yyval.node), (yyvsp[-2].node)); //adds stat to the tree
 					attach_node((yyval.node), (yyvsp[0].node)); //adds identifier to the tree
 				}
-#line 1632 "sl_parser.tab.c" /* yacc.c:1646  */
+#line 1646 "sl_parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 33:
-#line 305 "sl_parser.y" /* yacc.c:1646  */
+#line 319 "sl_parser.y" /* yacc.c:1646  */
     {
 					if(debug==1)printf("while\n");
 					(yyval.node) = make_node(WHILE, 0, "");
 					attach_node((yyval.node), (yyvsp[-2].node));
 					attach_node((yyval.node), (yyvsp[0].node));
 				}
-#line 1643 "sl_parser.tab.c" /* yacc.c:1646  */
+#line 1657 "sl_parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 34:
-#line 314 "sl_parser.y" /* yacc.c:1646  */
+#line 328 "sl_parser.y" /* yacc.c:1646  */
     {
 					if(debug==1)printf("print\n");
 					(yyval.node)=make_node(PRINT, 0, ""); 
 					attach_node((yyval.node), (yyvsp[-1].node));
 				}
-#line 1653 "sl_parser.tab.c" /* yacc.c:1646  */
+#line 1667 "sl_parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 35:
-#line 321 "sl_parser.y" /* yacc.c:1646  */
+#line 335 "sl_parser.y" /* yacc.c:1646  */
     {
 		 	if(debug==1)printf("val\n");
 			 (yyval.node)=make_node(VALUE, yylval.Double, "");
 		 }
-#line 1662 "sl_parser.tab.c" /* yacc.c:1646  */
+#line 1676 "sl_parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 36:
-#line 331 "sl_parser.y" /* yacc.c:1646  */
+#line 345 "sl_parser.y" /* yacc.c:1646  */
     {
 			if(debug==1)printf("input");
 			(yyval.node)=make_node(INPUT, 0,"");
 		}
-#line 1671 "sl_parser.tab.c" /* yacc.c:1646  */
+#line 1685 "sl_parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 37:
-#line 339 "sl_parser.y" /* yacc.c:1646  */
+#line 353 "sl_parser.y" /* yacc.c:1646  */
     {
 				if(debug==1)printf("starting sequence");
 				(yyval.node) = (yyvsp[-1].node);
 			}
-#line 1680 "sl_parser.tab.c" /* yacc.c:1646  */
+#line 1694 "sl_parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 38:
-#line 345 "sl_parser.y" /* yacc.c:1646  */
+#line 359 "sl_parser.y" /* yacc.c:1646  */
     {
 				if(debug==1)printf("Making a statement \n");
 				(yyval.node) = make_node(STATEMENT, 0, "");
 				attach_node((yyval.node), (yyvsp[0].node));
 			 }
-#line 1690 "sl_parser.tab.c" /* yacc.c:1646  */
+#line 1704 "sl_parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 39:
-#line 351 "sl_parser.y" /* yacc.c:1646  */
+#line 365 "sl_parser.y" /* yacc.c:1646  */
     {
 				if(debug==1)printf("Making statements\n");
 				(yyval.node) = make_node(STATEMENT, 0, "");
 				attach_node((yyval.node), (yyvsp[-1].node));
 				attach_node((yyval.node), (yyvsp[0].node));
 			 }
-#line 1701 "sl_parser.tab.c" /* yacc.c:1646  */
+#line 1715 "sl_parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 40:
-#line 360 "sl_parser.y" /* yacc.c:1646  */
+#line 374 "sl_parser.y" /* yacc.c:1646  */
     {
 			   if(debug==1)printf("IN PROGRAM\n");
 			   tree = (yyvsp[0].node); 
 			   if(debug==1)printf("added element to tree\n");
 		   }
-#line 1711 "sl_parser.tab.c" /* yacc.c:1646  */
+#line 1725 "sl_parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 41:
-#line 367 "sl_parser.y" /* yacc.c:1646  */
+#line 381 "sl_parser.y" /* yacc.c:1646  */
     {
 		  	if(debug==1)printf("iden\n");
 		  	(yyval.node) = make_node(IDENTIFIER, 0, yylval.char_array);
 		  }
-#line 1720 "sl_parser.tab.c" /* yacc.c:1646  */
+#line 1734 "sl_parser.tab.c" /* yacc.c:1646  */
     break;
 
 
-#line 1724 "sl_parser.tab.c" /* yacc.c:1646  */
+#line 1738 "sl_parser.tab.c" /* yacc.c:1646  */
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires
@@ -1948,7 +1962,200 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 372 "sl_parser.y" /* yacc.c:1906  */
+#line 386 "sl_parser.y" /* yacc.c:1906  */
+
+
+ /*
+ * It will handle the node types that produce a value such as 
+ * identifiers, values, inputs, and arithmetic / logical operators. For 
+ * expression nodes that have children, it will need to recursively 
+ * evaluate those expressions. */
+double eval_expression(struct Node* node){
+/*Takes a parse tree node, and returns the value of the expression it 
+ * represents. 
+ */
+    int arg1, arg2 = 0;
+	switch(node->type){
+    	case VALUE: return node->value;
+    	case IDENTIFIER: return node->value;
+    	case INPUT: return node->value;
+   		case PLUS: 
+        	arg1 = eval_expression(node->children[0]);
+        	arg2 = eval_expression(node->children[1]);
+			return arg1 + arg2;
+   		case MINUS:
+        	arg1 = eval_expression(node->children[0]);
+        	arg2 = eval_expression(node->children[1]);
+			return arg1 - arg2;
+   		case DIVIDE:
+        	arg1 = eval_expression(node->children[0]);
+        	arg2 = eval_expression(node->children[1]);
+			return arg1 / arg2;
+   		case TIMES:
+        	arg1 = eval_expression(node->children[0]);
+        	arg2 = eval_expression(node->children[1]);
+			return arg1 * arg2;
+   		case LESS:
+        	arg1 = eval_expression(node->children[0]);
+        	arg2 = eval_expression(node->children[1]);
+			if (arg1 < arg2){
+				return 1;
+			}else{
+				return 0;
+			}
+   		case GREATER:
+        	arg1 = eval_expression(node->children[0]);
+        	arg2 = eval_expression(node->children[1]);
+			if (arg1 > arg2){
+				return 1;
+			}else{
+				return 0;
+			}
+   		case LESSEQ:
+        	arg1 = eval_expression(node->children[0]);
+        	arg2 = eval_expression(node->children[1]);
+			if (arg1 <= arg2){
+				return 1;
+			}else{
+				return 0;
+			}
+   		case GREATEREQ:
+        	arg1 = eval_expression(node->children[0]);
+        	arg2 = eval_expression(node->children[1]);
+			if (arg1 >= arg2){
+				return 1;
+			}else{
+				return 0;
+			}
+   		case EQUALS:   
+        	arg1 = eval_expression(node->children[0]);
+        	arg2 = eval_expression(node->children[1]);
+			if (arg1 == arg2){
+				return 1;
+			}else{
+				return 0;
+			}
+   		case NEQUALS:   
+        	arg1 = eval_expression(node->children[0]);
+        	arg2 = eval_expression(node->children[1]);
+			if (arg1 != arg2){
+				return 1;
+			}else{
+				return 0;
+			}
+   		case AND:   
+        	arg1 = eval_expression(node->children[0]);
+        	arg2 = eval_expression(node->children[1]);
+			if (arg1 && arg2){
+				return 1;
+			}else{
+				return 0;
+			}
+   		case OR:    
+        	arg1 = eval_expression(node->children[0]);
+        	arg2 = eval_expression(node->children[1]);
+			if (arg1 || arg2){
+				return 1;
+			}else{
+				return 0;
+			}
+   		case NOT:   
+        	arg1 = eval_expression(node->children[0]);
+			if (!arg1){
+				return 1;
+			}else{
+				return 0;
+			}	
+	}
+}
+
+
+
+
+
+
+
+
+void eval_statement(struct Node* node){
+	int i, j = 0;
+	struct var *currentVar;
+	for(i=0; i <node->num_children; i++){
+ 		 switch(node->type) {//for every possible node type, find the value
+ 		   case IDENTIFIER:
+				for(j = 0; j <sizeof(node->id); j++){
+		   			currentVar->name[j] = node->id[j];}
+			   	currentVar->value = eval_expression(node);break;
+ 		   case VALUE: 
+		   		currentVar->value = eval_expression(node);break;
+ 		   case PLUS:
+		   		currentVar->value = eval_expression(node);break;
+ 		   case MINUS:
+		   		currentVar->value = eval_expression(node);break;
+ 		   case DIVIDE:
+		   		currentVar->value = eval_expression(node);break;
+ 		   case TIMES: 
+		   		currentVar->value = eval_expression(node);break;
+ 		   case LESS:
+		   		currentVar->value = eval_expression(node);break;
+ 		   case GREATER: 
+		   		currentVar->value = eval_expression(node);break;
+ 		   case LESSEQ:
+		   		currentVar->value = eval_expression(node);break;
+ 		   case GREATEREQ: 
+		   		currentVar->value = eval_expression(node);break;
+ 		   case EQUALS: 
+		   		currentVar->value = eval_expression(node);break;
+ 		   case NEQUALS: 
+		   		currentVar->value = eval_expression(node);break;
+ 		   case AND: 
+		   		currentVar->value = eval_expression(node);break;
+ 		   case OR: 
+		   		currentVar->value = eval_expression(node);break;
+ 		   case NOT: 
+		   		currentVar->value = eval_expression(node);break;
+ 		   case INPUT: 
+		   		currentVar->value = eval_expression(node);break;
+ 		   case ASSIGN: 
+				for(i = 0; i<node->num_children; i++){
+					eval_statement(node->children[i]);
+				}
+
+ 		   case IF: 
+				for(i = 0; i<node->num_children; i++){
+					eval_statement(node->children[i]);
+				}
+ 		   case WHILE: 
+				for(i = 0; i<node->num_children; i++){
+					eval_statement(node->children[i]);
+				}
+ 		   case PRINT: 
+				for(i = 0; i<node->num_children; i++){
+					eval_statement(node->children[i]);
+				}
+ 		   case STATEMENT: //for each existing child, evaluate it
+				for(i = 0; i<node->num_children; i++){
+					eval_statement(node->children[i]);
+				}
+
+
+ 		   default:
+ 		     printf("Error, %d not a valid node type.\n", node->type);
+ 		     exit(1);
+		}
+		vars[i] = currentVar;
+	}
+}
+
+
+/*Takes a parse tree node, and evaluates the statement it represents. 
+ * Most of the statement types contain statements and/or expressions as 
+ * children nodes. These will have to be handled recursively. */
+                                                                
+
+
+
+
+
 
 void print_tree(struct Node* node, int tabs) {
   int i;
@@ -1996,7 +2203,7 @@ void print_tree(struct Node* node, int tabs) {
 
   /* print all children nodes underneath */
   for(i = 0; i < node->num_children; i++) {
- if(debug==1) 	printf("in for at element %d \n", i );
+ 	if(debug==1){printf("in for at element %d \n", i );}
     print_tree(node->children[i], tabs + 1);
   }
 }
@@ -2012,11 +2219,12 @@ void yyerror(const char* str) {
 int main(int argc, char* argv[])
 { 
 
-	if(debug==1)	printf("In main \n");
-	if(!argv[1]) printf("No file entered \n"); return 0;
-	    stdin = fopen(argv[1], "r");    
+	if(debug==1){printf("In main \n");}
+	if(!argv[1]){printf("No file entered \n"); return 0;}
+	stdin = fopen(argv[1], "r");    
 	yyparse();
 	print_tree(tree, 1);// (tree to feed in, num tabs it will print out with) 
-if(debug==1)	printf("leaving main \n");
+	eval_statement(tree);
+	if(debug==1){printf("leaving main \n");}
 	return 0; 
 }

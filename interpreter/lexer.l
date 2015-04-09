@@ -7,7 +7,7 @@
 %%
 
 %.*$                      { ;}
-[1-9]*[0-9]*(\.)?[0-9]*   {yylval.Double = double(atoi(yytext)); return VALUE;}
+[1-9]*[0-9]*(\.)?[0-9]*   {yylval.Double = (double)atof(yytext); return VALUE;}
 "+"                       { return PLUS;}
 "-"                       { return MINUS;}
 "/"                       { return DIVIDE;}
