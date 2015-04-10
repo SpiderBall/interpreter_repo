@@ -1,5 +1,5 @@
 %{
-#include "sl_parser.tab.h"
+include "sl_parser.tab.h"
 %}
 
 %option noyywrap
@@ -7,7 +7,7 @@
 %%
 
 %.*$                      { ;}
-[1-9]*[0-9]*(\.)?[0-9]*   {yylval.Double = (double)atof(yytext); return VALUE;}
+[1-9]*[0-9]*(\.)?[0-9]*   {yylval.Double = atoi(yytext); return VALUE;}
 "+"                       { return PLUS;}
 "-"                       { return MINUS;}
 "/"                       { return DIVIDE;}

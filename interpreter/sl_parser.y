@@ -510,21 +510,26 @@ void eval_statement(struct Node* node){
 		   			currentVar->name[j] = node->id[j];}//this is here so that the name can be stored in the vars array
 			   	currentVar->value = eval_expression(node);break;
  		   case ASSIGN: 
+		   	//first child must always be an identifier, second child must be a value
 				for(i = 0; i<node->num_children; i++){
 					eval_statement(node->children[i]);
 				}
 
  		   case IF: 
-				for(i = 0; i<node->num_children; i++){
-					eval_statement(node->children[i]);
+				if(eval_expression(node->children[0])){//statement to be evaluated
+					currentVar->value = eval_expression(node->children[1]); //statement to be executed if expr above is true
+				}else{
+					if(node->children[2]){ //else case, if a third child exists
+					currentVar->value = eval_expression(node->children[2]); //if a third child exists, evaluate it
+					}
 				}
  		   case WHILE: 
-				for(i = 0; i<node->num_children; i++){
-					eval_statement(node->children[i]);
+				while(eval_expression(node->children[0])){//statement to be evaluated
+					currentVar->value = eval_expression(node->children[1]); //statement to be executed while expr above is true
 				}
  		   case PRINT://should only have one child? and it should always be an expression?
 				currentVar->value = eval_expression(node->children[0]);
-				printf(currentVar->value);
+				printf("the current value is %d", (int)currentVar->value);
  		   case STATEMENT: //for each existing child, evaluate it
 				for(i = 0; i<node->num_children; i++){
 					eval_statement(node->children[i]);
@@ -614,6 +619,7 @@ int main(int argc, char* argv[])
 	stdin = fopen(argv[1], "r");    
 	yyparse();
 	print_tree(tree, 1);// (tree to feed in, num tabs it will print out with) 
+	printf("WE ARE OUT OF PRINT TREE");
 	eval_statement(tree);
 	if(debug==1){printf("leaving main \n");}
 	return 0; 

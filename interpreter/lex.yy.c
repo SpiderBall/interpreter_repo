@@ -526,7 +526,7 @@ int yy_flex_debug = 0;
 char *yytext;
 #line 1 "lexer.l"
 #line 2 "lexer.l"
-#include "sl_parser.tab.h"
+include "sl_parser.tab.h"
 #line 531 "lex.yy.c"
 
 #define INITIAL 0
@@ -811,7 +811,7 @@ YY_RULE_SETUP
 case 2:
 YY_RULE_SETUP
 #line 10 "lexer.l"
-{yylval.Double = (double)atof(yytext); return VALUE;}
+{yylval.Double = atoi(yytext); return VALUE;}
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
