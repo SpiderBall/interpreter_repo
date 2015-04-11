@@ -70,8 +70,7 @@ void attach_node(struct Node* parent, struct Node* child) {
   parent->num_children++;
   assert(parent->num_children <= MAX_CHILDREN);
 }	
-
-struct Node* tree = NULL;//im gonna see if initializing tree will help
+struct Node* tree;
 
 %}
 
@@ -397,6 +396,7 @@ double eval_expression(struct Node* node){
 /*Takes a parse tree node, and returns the value of the expression it 
  * represents. 
  */
+  	if(!node){ printf("no node \n"); return 0;}
 	struct var *newVar;	
     double arg1, arg2 = 0;
 	int i;
@@ -541,21 +541,27 @@ double eval_expression(struct Node* node){
 
 void eval_statement(struct Node* node){
 	int i, j = 0;
-	struct var *newVar;
+	struct var *newVar = malloc(sizeof(struct var));
 	double a;
+  	if(!node){ printf("no node \n"); return;}
 	
 	struct var *currentVar;
-	
+	printf("about to enter eval_stat switch\n");	
 	 switch(node->type) {//for every possible node type, find the value
        case ASSIGN: {
         //first child must always be an identifier, second child must be a value
             printf("BLAH ");
             for(i = 0; i<100; i++){
 
-                if(strcmp(node->children[0]->id, vars[i]->name)==0){//if the identifier has been used before
+                if(strcmp(node->children[0]->id, vars[i]->name)==0){
+				//if the identifier has been used before
                     
-                    strcpy(newVar->name, node->children[0]->id);//copies name from first child into vars array
-                    newVar->value = eval_expression(node->children[1]);//stores value of second child in vars array
+                    strcpy(newVar->name, node->children[0]->id);
+					//copies name from first child into vars array
+
+                    newVar->value = eval_expression(node->children[1]);
+					//stores value of second child in vars array
+
                     vars[i] = newVar; //stores temp variable in vars
                     printf("BLAH ");
          			//printf(vars[i]);
@@ -567,8 +573,11 @@ void eval_statement(struct Node* node){
             // if we get this far, then this variable was not yet defined
             
             strcpy(newVar->name, node->children[0]->id);
-            newVar->value = eval_expression(node->children[1]);
-            vars[var_number] = newVar; //sets the vars element at the current number of vars to the temp variable
+			newVar->value = eval_expression(node->children[1]);
+            vars[var_number] = newVar; 
+			//sets the vars element at the current number of vars to the 
+			//temp variable
+
             var_number++;//adds to the number of variables in the program
 
             break;
@@ -607,14 +616,16 @@ void eval_statement(struct Node* node){
 			for(i = 0; i<node->num_children+1; i++){
 				printf("in for at element %d", i);
 				eval_statement(node->children[i]);
-			}*/
+			}
 			//EVEN THIS DOESNT WORK WHY
 			if(node){
 			printf("THIS NODE IS A THING");
 			}else{printf("THIS NODE IS NOT A THING");}
 
 			printf("i survived that if else");
-			if(!node->children[1]){
+			*/
+			
+				if(!node->children[1]){
 				printf("in first if");
 				eval_statement(node->children[0]);
 			}else{
@@ -722,6 +733,7 @@ void yyerror(const char* str) {
 
 int main(int argc, char* argv[])
 { 
+	
 	int i;
 	for(i=0; i<100;i++){//initializes values of vars (I know its hairy just trust me)
 		vars[i] = "NULL";
@@ -729,6 +741,8 @@ int main(int argc, char* argv[])
 
 	if(debug==1){printf("In main \n");}
 	if(!argv[1]){printf("No file entered \n"); return 0;}
+	//tree->value = 0;//im gonna see if initializing tree will help
+	//tree->type = 0;//im gonna see if initializing tree will help
 	stdin = fopen(argv[1], "r");    
 	yyparse();
 	//print_tree(tree, 1);// (tree to feed in, num tabs it will print out with) 
