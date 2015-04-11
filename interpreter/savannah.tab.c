@@ -62,7 +62,7 @@
 
 
 /* Copy the first part of user declarations.  */
-#line 2 "sl_parser.y" /* yacc.c:339  */
+#line 4 "savannah.y" /* yacc.c:339  */
 
 
 #include <stdio.h>
@@ -90,6 +90,20 @@ struct Node {
 };
 
 
+
+struct var {
+
+	char name[100];
+
+	double value;
+
+};
+
+
+struct var *vars[1000];
+
+
+
 /* creates a new node and returns it */
 struct Node* make_node(int type, double value, char* id) {
   int i;
@@ -109,6 +123,7 @@ struct Node* make_node(int type, double value, char* id) {
   /* return new node */
   return node;
 }
+int debug = 0;
 
 /* attach an existing node onto a parent */
 void attach_node(struct Node* parent, struct Node* child) {
@@ -121,9 +136,7 @@ void attach_node(struct Node* parent, struct Node* child) {
 struct Node* tree;
 
 
-
-
-#line 127 "sl_parser.c" /* yacc.c:339  */
+#line 140 "savannah.tab.c" /* yacc.c:339  */
 
 # ifndef YY_NULLPTR
 #  if defined __cplusplus && 201103L <= __cplusplus
@@ -142,9 +155,9 @@ struct Node* tree;
 #endif
 
 /* In a future release of Bison, this section will be replaced
-   by #include "sl_parser.h".  */
-#ifndef YY_YY_SL_PARSER_H_INCLUDED
-# define YY_YY_SL_PARSER_H_INCLUDED
+   by #include "savannah.tab.h".  */
+#ifndef YY_YY_SAVANNAH_TAB_H_INCLUDED
+# define YY_YY_SAVANNAH_TAB_H_INCLUDED
 /* Debug traces.  */
 #ifndef YYDEBUG
 # define YYDEBUG 0
@@ -194,10 +207,10 @@ extern int yydebug;
 typedef union YYSTYPE YYSTYPE;
 union YYSTYPE
 {
-#line 66 "sl_parser.y" /* yacc.c:355  */
+#line 81 "savannah.y" /* yacc.c:355  */
  char* char_array; struct Node * node; double Double;
 
-#line 201 "sl_parser.c" /* yacc.c:355  */
+#line 214 "savannah.tab.c" /* yacc.c:355  */
 };
 # define YYSTYPE_IS_TRIVIAL 1
 # define YYSTYPE_IS_DECLARED 1
@@ -208,11 +221,11 @@ extern YYSTYPE yylval;
 
 int yyparse (void);
 
-#endif /* !YY_YY_SL_PARSER_H_INCLUDED  */
+#endif /* !YY_YY_SAVANNAH_TAB_H_INCLUDED  */
 
 /* Copy the second part of user declarations.  */
 
-#line 216 "sl_parser.c" /* yacc.c:358  */
+#line 229 "savannah.tab.c" /* yacc.c:358  */
 
 #ifdef short
 # undef short
@@ -452,18 +465,18 @@ union yyalloc
 #endif /* !YYCOPY_NEEDED */
 
 /* YYFINAL -- State number of the termination state.  */
-#define YYFINAL  44
+#define YYFINAL  33
 /* YYLAST -- Last index in YYTABLE.  */
-#define YYLAST   171
+#define YYLAST   70
 
 /* YYNTOKENS -- Number of terminals.  */
 #define YYNTOKENS  31
 /* YYNNTS -- Number of nonterminals.  */
-#define YYNNTS  18
+#define YYNNTS  19
 /* YYNRULES -- Number of rules.  */
-#define YYNRULES  38
+#define YYNRULES  41
 /* YYNSTATES -- Number of states.  */
-#define YYNSTATES  67
+#define YYNSTATES  72
 
 /* YYTRANSLATE[YYX] -- Symbol number corresponding to YYX as returned
    by yylex, with out-of-bounds checking.  */
@@ -509,10 +522,11 @@ static const yytype_uint8 yytranslate[] =
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_uint16 yyrline[] =
 {
-       0,   106,   106,   107,   108,   109,   110,   111,   112,   113,
-     114,   115,   116,   117,   118,   124,   134,   142,   149,   157,
-     165,   172,   178,   184,   190,   196,   204,   211,   221,   228,
-     235,   245,   247,   254,   260,   264,   266,   267,   269
+       0,   118,   118,   119,   120,   121,   122,   123,   129,   133,
+     138,   145,   152,   159,   167,   174,   181,   190,   198,   205,
+     213,   220,   227,   234,   241,   248,   254,   261,   267,   275,
+     282,   292,   310,   320,   329,   336,   346,   354,   360,   366,
+     375,   382
 };
 #endif
 
@@ -525,10 +539,10 @@ static const char *const yytname[] =
   "DIVIDE", "TIMES", "LESS", "GREATER", "LESSEQ", "GREATEREQ", "EQUALS",
   "NEQUALS", "AND", "OR", "NOT", "SEMICOLON", "ASSIGN", "OPEN_PARENS",
   "CLOSE_PARENS", "START", "END", "IF", "THEN", "ELSE", "WHILE", "DO",
-  "PRINT", "INPUT", "$accept", "stat", "not_expr", "multdiv_expr",
-  "plusmin_expr", "conditional_expr", "and_expr", "or_expr", "if",
-  "assign", "ifelse", "identifier", "while", "print", "value", "seq",
-  "stats", "program", YY_NULLPTR
+  "PRINT", "INPUT", "$accept", "stat", "paren_expr", "not_expr",
+  "multdiv_expr", "plusmin_expr", "conditional_expr", "and_expr",
+  "or_expr", "if", "assign", "ifelse", "while", "print", "value", "seq",
+  "stats", "program", "identifier", YY_NULLPTR
 };
 #endif
 
@@ -544,10 +558,10 @@ static const yytype_uint16 yytoknum[] =
 };
 # endif
 
-#define YYPACT_NINF -13
+#define YYPACT_NINF -42
 
 #define yypact_value_is_default(Yystate) \
-  (!!((Yystate) == (-13)))
+  (!!((Yystate) == (-42)))
 
 #define YYTABLE_NINF -1
 
@@ -556,15 +570,16 @@ static const yytype_uint16 yytoknum[] =
 
   /* YYPACT[STATE-NUM] -- Index in YYTABLE of the portion describing
      STATE-NUM.  */
-static const yytype_int16 yypact[] =
+static const yytype_int8 yypact[] =
 {
-      57,   -13,   -13,    57,    57,    57,    57,    57,    42,   -13,
-     -13,   -13,   -13,   -13,   -13,   -13,   -13,   -13,   -12,   -13,
-     -13,   -13,   -13,   -13,    18,   155,    -4,   106,    82,   127,
-      57,    57,    57,    57,    57,    57,    57,    57,    57,    57,
-      57,    57,   -13,    57,   -13,   -13,    57,    57,   -13,   155,
-     155,   155,   155,   155,   155,   155,   155,   155,   155,   155,
-     155,   141,     0,   155,   -13,    57,   155
+      13,   -42,    13,     4,     4,     4,    13,   -42,   -42,   -42,
+     -42,   -42,   -42,   -42,    15,    -7,    26,   -42,     4,     4,
+     -42,   -42,   -42,    24,    22,    47,     5,    -3,   -42,   -42,
+      -5,     1,   -42,   -42,     4,   -42,   -42,    34,     4,     4,
+       4,     4,     4,     4,     4,     4,     4,     4,     4,     4,
+      13,    13,   -42,    23,   -42,   -42,   -42,    24,    24,    22,
+      22,    22,    22,    22,    22,    47,     5,    10,   -42,   -42,
+      13,   -42
 };
 
   /* YYDEFACT[STATE-NUM] -- Default reduction number in state STATE-NUM.
@@ -572,27 +587,28 @@ static const yytype_int16 yypact[] =
      means the default is an error.  */
 static const yytype_uint8 yydefact[] =
 {
-       0,    31,    34,     0,     0,     0,     0,     0,    36,     2,
-       3,     4,     5,     6,     7,     9,     8,    10,     0,    11,
-      12,    14,    13,    38,     0,    15,     0,     0,     0,     0,
+       0,    41,     0,     0,     0,     0,    38,     3,     2,     4,
+       5,     6,     7,    40,     0,     0,     0,    35,     0,     0,
+      36,    12,    15,    18,    25,    27,    29,     0,     9,    10,
+       0,     0,    39,     1,     0,    37,    11,     0,     0,     0,
        0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
-       0,     0,    37,     0,     1,    35,     0,     0,    33,    18,
-      19,    17,    16,    21,    20,    23,    22,    24,    25,    26,
-      27,     0,    28,    32,    29,     0,    30
+       0,     0,    34,     0,     8,    14,    13,    16,    17,    20,
+      19,    22,    21,    23,    24,    26,    28,    30,    33,    31,
+       0,    32
 };
 
   /* YYPGOTO[NTERM-NUM].  */
 static const yytype_int8 yypgoto[] =
 {
-     -13,    -3,   -13,   -13,   -13,   -13,   -13,   -13,   -13,   -13,
-     -13,   -13,   -13,   -13,   -13,   -13,    13,   -13
+     -42,   -41,   -42,   -13,    28,    20,   -18,   -11,    -1,   -42,
+     -42,   -42,   -42,   -42,   -42,   -42,    12,   -42,     0
 };
 
   /* YYDEFGOTO[NTERM-NUM].  */
 static const yytype_int8 yydefgoto[] =
 {
-      -1,     8,     9,    10,    11,    12,    13,    14,    15,    16,
-      17,    18,    19,    20,    21,    22,    23,    24
+      -1,     6,    21,    22,    23,    24,    25,    26,    27,     7,
+       8,     9,    10,    11,    28,    12,    13,    14,    29
 };
 
   /* YYTABLE[YYPACT[STATE-NUM]] -- What to do in state STATE-NUM.  If
@@ -600,77 +616,60 @@ static const yytype_int8 yydefgoto[] =
      number is the opposite.  If YYTABLE_NINF, syntax error.  */
 static const yytype_uint8 yytable[] =
 {
-      25,    43,    27,    28,    29,    30,    31,    32,    33,    34,
-      35,    36,    37,    38,    39,    40,    41,    26,    44,    45,
-       0,    42,     0,     0,     0,     0,    65,    49,    50,    51,
-      52,    53,    54,    55,    56,    57,    58,    59,    60,     0,
-      61,     0,     0,    62,    63,     1,     2,    30,    31,    32,
-      33,    34,    35,    36,    37,    38,    39,    40,    41,     3,
-       1,     2,    66,     0,     4,     0,     5,     0,     0,     6,
-       0,     7,     0,     0,     3,     0,     0,     0,     0,     4,
-       0,     5,     0,     0,     6,     0,     7,    30,    31,    32,
-      33,    34,    35,    36,    37,    38,    39,    40,    41,     0,
-       0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
-      47,    30,    31,    32,    33,    34,    35,    36,    37,    38,
-      39,    40,    41,     0,     0,     0,     0,     0,     0,     0,
-       0,    46,    30,    31,    32,    33,    34,    35,    36,    37,
-      38,    39,    40,    41,     0,    48,    30,    31,    32,    33,
-      34,    35,    36,    37,    38,    39,    40,    41,     0,    64,
-      30,    31,    32,    33,    34,    35,    36,    37,    38,    39,
-      40,    41
+      15,    37,    15,    30,    31,    36,    15,     1,    17,    67,
+      68,    49,    34,    49,    16,    33,     1,    49,    32,    52,
+      48,    18,    50,    51,    19,    55,    56,    40,    41,    71,
+      65,    38,    39,    53,    20,     2,    70,     3,    66,    49,
+       4,    69,     5,    42,    43,    44,    45,    46,    47,    35,
+      15,    15,     0,     0,     0,    54,    42,    43,    44,    45,
+      46,    47,    59,    60,    61,    62,    63,    64,    57,    58,
+      15
 };
 
 static const yytype_int8 yycheck[] =
 {
-       3,    13,     5,     6,     7,     5,     6,     7,     8,     9,
-      10,    11,    12,    13,    14,    15,    16,     4,     0,    23,
-      -1,     8,    -1,    -1,    -1,    -1,    26,    30,    31,    32,
-      33,    34,    35,    36,    37,    38,    39,    40,    41,    -1,
-      43,    -1,    -1,    46,    47,     3,     4,     5,     6,     7,
-       8,     9,    10,    11,    12,    13,    14,    15,    16,    17,
-       3,     4,    65,    -1,    22,    -1,    24,    -1,    -1,    27,
-      -1,    29,    -1,    -1,    17,    -1,    -1,    -1,    -1,    22,
-      -1,    24,    -1,    -1,    27,    -1,    29,     5,     6,     7,
-       8,     9,    10,    11,    12,    13,    14,    15,    16,    -1,
-      -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,
-      28,     5,     6,     7,     8,     9,    10,    11,    12,    13,
-      14,    15,    16,    -1,    -1,    -1,    -1,    -1,    -1,    -1,
-      -1,    25,     5,     6,     7,     8,     9,    10,    11,    12,
-      13,    14,    15,    16,    -1,    18,     5,     6,     7,     8,
-       9,    10,    11,    12,    13,    14,    15,    16,    -1,    18,
-       5,     6,     7,     8,     9,    10,    11,    12,    13,    14,
-      15,    16
+       0,    19,     2,     4,     5,    18,     6,     3,     4,    50,
+      51,    16,    19,    16,     2,     0,     3,    16,     6,    18,
+      15,    17,    25,    28,    20,    38,    39,     5,     6,    70,
+      48,     7,     8,    34,    30,    22,    26,    24,    49,    16,
+      27,    18,    29,     9,    10,    11,    12,    13,    14,    23,
+      50,    51,    -1,    -1,    -1,    21,     9,    10,    11,    12,
+      13,    14,    42,    43,    44,    45,    46,    47,    40,    41,
+      70
 };
 
   /* YYSTOS[STATE-NUM] -- The (internal number of the) accessing
      symbol of state STATE-NUM.  */
 static const yytype_uint8 yystos[] =
 {
-       0,     3,     4,    17,    22,    24,    27,    29,    32,    33,
-      34,    35,    36,    37,    38,    39,    40,    41,    42,    43,
-      44,    45,    46,    47,    48,    32,    47,    32,    32,    32,
-       5,     6,     7,     8,     9,    10,    11,    12,    13,    14,
-      15,    16,    47,    13,     0,    23,    25,    28,    18,    32,
-      32,    32,    32,    32,    32,    32,    32,    32,    32,    32,
-      32,    32,    32,    32,    18,    26,    32
+       0,     3,    22,    24,    27,    29,    32,    40,    41,    42,
+      43,    44,    46,    47,    48,    49,    47,     4,    17,    20,
+      30,    33,    34,    35,    36,    37,    38,    39,    45,    49,
+      39,    39,    47,     0,    19,    23,    34,    37,     7,     8,
+       5,     6,     9,    10,    11,    12,    13,    14,    15,    16,
+      25,    28,    18,    39,    21,    34,    34,    35,    35,    36,
+      36,    36,    36,    36,    36,    37,    38,    32,    32,    18,
+      26,    32
 };
 
   /* YYR1[YYN] -- Symbol number of symbol that rule YYN derives.  */
 static const yytype_uint8 yyr1[] =
 {
-       0,    31,    32,    32,    32,    32,    32,    32,    32,    32,
-      32,    32,    32,    32,    32,    33,    34,    34,    35,    35,
-      36,    36,    36,    36,    36,    36,    37,    38,    39,    40,
-      41,    42,    43,    44,    45,    46,    47,    47,    48
+       0,    31,    32,    32,    32,    32,    32,    32,    33,    33,
+      33,    34,    34,    35,    35,    35,    36,    36,    36,    37,
+      37,    37,    37,    37,    37,    37,    38,    38,    39,    39,
+      40,    41,    42,    43,    44,    45,    45,    46,    47,    47,
+      48,    49
 };
 
   /* YYR2[YYN] -- Number of symbols on the right hand side of rule YYN.  */
 static const yytype_uint8 yyr2[] =
 {
-       0,     2,     1,     1,     1,     1,     1,     1,     1,     1,
-       1,     1,     1,     1,     1,     2,     3,     3,     3,     3,
-       3,     3,     3,     3,     3,     3,     3,     3,     4,     4,
-       6,     1,     4,     3,     1,     3,     1,     2,     1
+       0,     2,     1,     1,     1,     1,     1,     1,     3,     1,
+       1,     2,     1,     3,     3,     1,     3,     3,     1,     3,
+       3,     3,     3,     3,     3,     1,     3,     1,     3,     1,
+       4,     4,     6,     4,     3,     1,     1,     3,     1,     2,
+       1,     1
 };
 
 
@@ -1346,236 +1345,396 @@ yyreduce:
   YY_REDUCE_PRINT (yyn);
   switch (yyn)
     {
-        case 14:
-#line 119 "sl_parser.y" /* yacc.c:1646  */
+        case 2:
+#line 118 "savannah.y" /* yacc.c:1646  */
+    { (yyval.node)=(yyvsp[0].node);}
+#line 1352 "savannah.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 3:
+#line 119 "savannah.y" /* yacc.c:1646  */
+    { (yyval.node)=(yyvsp[0].node);}
+#line 1358 "savannah.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 4:
+#line 120 "savannah.y" /* yacc.c:1646  */
+    { (yyval.node)=(yyvsp[0].node);}
+#line 1364 "savannah.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 5:
+#line 121 "savannah.y" /* yacc.c:1646  */
+    { (yyval.node)=(yyvsp[0].node);}
+#line 1370 "savannah.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 6:
+#line 122 "savannah.y" /* yacc.c:1646  */
+    { (yyval.node)=(yyvsp[0].node);}
+#line 1376 "savannah.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 7:
+#line 123 "savannah.y" /* yacc.c:1646  */
+    { (yyval.node)=(yyvsp[0].node);}
+#line 1382 "savannah.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 8:
+#line 129 "savannah.y" /* yacc.c:1646  */
     {
-	attach_node((yyval.node), (yyvsp[0].node));
-}
-#line 1355 "sl_parser.c" /* yacc.c:1646  */
+		  if(debug==1) printf("paren_expr\n");
+		  (yyval.node)=(yyvsp[-1].node);
+		  }
+#line 1391 "savannah.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 9:
+#line 133 "savannah.y" /* yacc.c:1646  */
+    {
+		  if(debug==1) printf("going up to value\n");
+		  (yyval.node) = (yyvsp[0].node);
+		  }
+#line 1400 "savannah.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 10:
+#line 139 "savannah.y" /* yacc.c:1646  */
+    {
+				if(debug==1)printf("identifier");
+				(yyval.node)=(yyvsp[0].node);
+			}
+#line 1409 "savannah.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 11:
+#line 146 "savannah.y" /* yacc.c:1646  */
+    {
+						if(debug==1)printf("not_expr\n");
+						(yyval.node) = make_node(NOT, 0, "");
+						attach_node((yyval.node), (yyvsp[0].node));  
+						/* not should always be to the left of a statement*/
+					}
+#line 1420 "savannah.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 12:
+#line 152 "savannah.y" /* yacc.c:1646  */
+    {
+				if(debug==1)printf("going up\n");
+				(yyval.node) = (yyvsp[0].node);}
+#line 1428 "savannah.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 13:
+#line 160 "savannah.y" /* yacc.c:1646  */
+    {
+						if(debug==1)printf("mult_expr\n");
+						(yyval.node)=make_node(TIMES, 0, "");
+						attach_node((yyval.node), (yyvsp[-2].node));
+						attach_node((yyval.node), (yyvsp[0].node));
+					}
+#line 1439 "savannah.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 14:
+#line 168 "savannah.y" /* yacc.c:1646  */
+    {
+						if(debug==1)printf("div_expr\n");
+						(yyval.node)=make_node(DIVIDE, 0, "");
+						attach_node((yyval.node), (yyvsp[-2].node));
+						attach_node((yyval.node), (yyvsp[0].node));
+					}
+#line 1450 "savannah.tab.c" /* yacc.c:1646  */
     break;
 
   case 15:
-#line 125 "sl_parser.y" /* yacc.c:1646  */
+#line 174 "savannah.y" /* yacc.c:1646  */
     {
-	(yyval.node) = make_node(NOT, 0, "");
-	attach_node((yyval.node), (yyvsp[0].node));  /* not should always be to the left of a statement*/
-}
-#line 1364 "sl_parser.c" /* yacc.c:1646  */
+				if(debug==1)printf("going up\n");
+				(yyval.node) = (yyvsp[0].node);}
+#line 1458 "savannah.tab.c" /* yacc.c:1646  */
     break;
 
   case 16:
-#line 135 "sl_parser.y" /* yacc.c:1646  */
+#line 182 "savannah.y" /* yacc.c:1646  */
     {
 
-				(yyval.node)=make_node(TIMES, 0, "");
-				attach_node((yyval.node), (yyvsp[-2].node));
-				attach_node((yyval.node), (yyvsp[0].node));
-			}
-#line 1375 "sl_parser.c" /* yacc.c:1646  */
+						if(debug==1)printf("plus_expr\n");
+						(yyval.node)=make_node(PLUS, 0, "");
+						attach_node((yyval.node), (yyvsp[-2].node));
+						attach_node((yyval.node), (yyvsp[0].node));
+
+					}
+#line 1471 "savannah.tab.c" /* yacc.c:1646  */
     break;
 
   case 17:
-#line 143 "sl_parser.y" /* yacc.c:1646  */
+#line 192 "savannah.y" /* yacc.c:1646  */
     {
-				(yyval.node)=make_node(DIVIDE, 0, "");
-				attach_node((yyval.node), (yyvsp[-2].node));
-				attach_node((yyval.node), (yyvsp[0].node));
-			}
-#line 1385 "sl_parser.c" /* yacc.c:1646  */
+						if(debug==1)printf("min_expr\n");
+						(yyval.node)=make_node(MINUS, 0, "");
+						attach_node((yyval.node), (yyvsp[-2].node));
+						attach_node((yyval.node), (yyvsp[0].node));
+					}
+#line 1482 "savannah.tab.c" /* yacc.c:1646  */
     break;
 
   case 18:
-#line 150 "sl_parser.y" /* yacc.c:1646  */
+#line 198 "savannah.y" /* yacc.c:1646  */
     {
-
-				(yyval.node)=make_node(PLUS, 0, "");
-				attach_node((yyval.node), (yyvsp[-2].node));
-				attach_node((yyval.node), (yyvsp[0].node));
-
-			}
-#line 1397 "sl_parser.c" /* yacc.c:1646  */
+			if(debug==1)	printf("going up\n");
+				(yyval.node) = (yyvsp[0].node);}
+#line 1490 "savannah.tab.c" /* yacc.c:1646  */
     break;
 
   case 19:
-#line 159 "sl_parser.y" /* yacc.c:1646  */
+#line 206 "savannah.y" /* yacc.c:1646  */
     {
-				(yyval.node)=make_node(MINUS, 0, "");
-				attach_node((yyval.node), (yyvsp[-2].node));
-				attach_node((yyval.node), (yyvsp[0].node));
-			}
-#line 1407 "sl_parser.c" /* yacc.c:1646  */
+						if(debug==1)printf("greater\n");
+						(yyval.node)=make_node(GREATER, 0, "");
+						attach_node((yyval.node), (yyvsp[-2].node));
+						attach_node((yyval.node), (yyvsp[0].node));
+					}
+#line 1501 "savannah.tab.c" /* yacc.c:1646  */
     break;
 
   case 20:
-#line 166 "sl_parser.y" /* yacc.c:1646  */
+#line 214 "savannah.y" /* yacc.c:1646  */
     {
-					(yyval.node)=make_node(GREATER, 0, "");
-					attach_node((yyval.node), (yyvsp[-2].node));
-					attach_node((yyval.node), (yyvsp[0].node));
-				}
-#line 1417 "sl_parser.c" /* yacc.c:1646  */
+						if(debug==1)printf("less\n");
+						(yyval.node)=make_node(LESS, 0, "");
+						attach_node((yyval.node), (yyvsp[-2].node));
+						attach_node((yyval.node), (yyvsp[0].node));
+					}
+#line 1512 "savannah.tab.c" /* yacc.c:1646  */
     break;
 
   case 21:
-#line 173 "sl_parser.y" /* yacc.c:1646  */
+#line 221 "savannah.y" /* yacc.c:1646  */
     {
-					(yyval.node)=make_node(LESS, 0, "");
-					attach_node((yyval.node), (yyvsp[-2].node));
-					attach_node((yyval.node), (yyvsp[0].node));
-				}
-#line 1427 "sl_parser.c" /* yacc.c:1646  */
+						if(debug==1)printf("greatereq\n");
+						(yyval.node)=make_node(GREATEREQ, 0, "");
+						attach_node((yyval.node), (yyvsp[-2].node));
+						attach_node((yyval.node), (yyvsp[0].node));
+					}
+#line 1523 "savannah.tab.c" /* yacc.c:1646  */
     break;
 
   case 22:
-#line 179 "sl_parser.y" /* yacc.c:1646  */
+#line 228 "savannah.y" /* yacc.c:1646  */
     {
-					(yyval.node)=make_node(GREATEREQ, 0, "");
-					attach_node((yyval.node), (yyvsp[-2].node));
-					attach_node((yyval.node), (yyvsp[0].node));
-				}
-#line 1437 "sl_parser.c" /* yacc.c:1646  */
+						if(debug==1)printf("lesseq\n");
+						(yyval.node)=make_node(LESSEQ, 0, "");
+						attach_node((yyval.node), (yyvsp[-2].node));
+						attach_node((yyval.node), (yyvsp[0].node));
+					}
+#line 1534 "savannah.tab.c" /* yacc.c:1646  */
     break;
 
   case 23:
-#line 185 "sl_parser.y" /* yacc.c:1646  */
+#line 235 "savannah.y" /* yacc.c:1646  */
     {
-					(yyval.node)=make_node(LESSEQ, 0, "");
-					attach_node((yyval.node), (yyvsp[-2].node));
-					attach_node((yyval.node), (yyvsp[0].node));
-				}
-#line 1447 "sl_parser.c" /* yacc.c:1646  */
+						if(debug==1)printf("equals\n");
+						(yyval.node)=make_node(EQUALS, 0, "");
+						attach_node((yyval.node), (yyvsp[-2].node));
+						attach_node((yyval.node), (yyvsp[0].node));
+					}
+#line 1545 "savannah.tab.c" /* yacc.c:1646  */
     break;
 
   case 24:
-#line 191 "sl_parser.y" /* yacc.c:1646  */
+#line 242 "savannah.y" /* yacc.c:1646  */
     {
-					(yyval.node)=make_node(EQUALS, 0, "");
-					attach_node((yyval.node), (yyvsp[-2].node));
-					attach_node((yyval.node), (yyvsp[0].node));
-				}
-#line 1457 "sl_parser.c" /* yacc.c:1646  */
+						if(debug==1)printf("nequals\n");
+						(yyval.node)=make_node(NEQUALS, 0, "");
+						attach_node((yyval.node), (yyvsp[-2].node));
+						attach_node((yyval.node), (yyvsp[0].node));
+					}
+#line 1556 "savannah.tab.c" /* yacc.c:1646  */
     break;
 
   case 25:
-#line 197 "sl_parser.y" /* yacc.c:1646  */
+#line 248 "savannah.y" /* yacc.c:1646  */
     {
-					(yyval.node)=make_node(NEQUALS, 0, "");
-					attach_node((yyval.node), (yyvsp[-2].node));
-					attach_node((yyval.node), (yyvsp[0].node));
-				}
-#line 1467 "sl_parser.c" /* yacc.c:1646  */
+				if(debug==1)printf("going up\n");
+				(yyval.node) = (yyvsp[0].node);}
+#line 1564 "savannah.tab.c" /* yacc.c:1646  */
     break;
 
   case 26:
-#line 205 "sl_parser.y" /* yacc.c:1646  */
+#line 255 "savannah.y" /* yacc.c:1646  */
     {
-	(yyval.node) = make_node(AND, 0, "");
-	attach_node((yyval.node), (yyvsp[-2].node));
-	attach_node((yyval.node), (yyvsp[0].node));
-}
-#line 1477 "sl_parser.c" /* yacc.c:1646  */
+					if(debug==1)printf("and\n");
+					(yyval.node) = make_node(AND, 0, "");
+					attach_node((yyval.node), (yyvsp[-2].node));
+					attach_node((yyval.node), (yyvsp[0].node));
+				}
+#line 1575 "savannah.tab.c" /* yacc.c:1646  */
     break;
 
   case 27:
-#line 212 "sl_parser.y" /* yacc.c:1646  */
+#line 261 "savannah.y" /* yacc.c:1646  */
     {
-	(yyval.node) = make_node(OR, 0, "");
-	attach_node((yyval.node), (yyvsp[-2].node));
-	attach_node((yyval.node), (yyvsp[0].node));
-}
-#line 1487 "sl_parser.c" /* yacc.c:1646  */
+			if(debug==1)printf("going up\n");
+			(yyval.node)=(yyvsp[0].node);}
+#line 1583 "savannah.tab.c" /* yacc.c:1646  */
     break;
 
   case 28:
-#line 222 "sl_parser.y" /* yacc.c:1646  */
-    {
-	(yyval.node) = make_node(IF, 0, "");
-	attach_node((yyval.node), (yyvsp[-2].node));
-	attach_node((yyval.node), (yyvsp[0].node));
-}
-#line 1497 "sl_parser.c" /* yacc.c:1646  */
+#line 268 "savannah.y" /* yacc.c:1646  */
+    { 
+					if(debug==1)printf("or\n");
+					(yyval.node) = make_node(OR, 0, "");
+					attach_node((yyval.node), (yyvsp[-2].node));
+					attach_node((yyval.node), (yyvsp[0].node));
+
+				}
+#line 1595 "savannah.tab.c" /* yacc.c:1646  */
     break;
 
   case 29:
-#line 229 "sl_parser.y" /* yacc.c:1646  */
+#line 275 "savannah.y" /* yacc.c:1646  */
     {
-	(yyval.node) = make_node(ASSIGN, 0 ,"");
-	attach_node((yyval.node), (yyvsp[-3].node)); //adds identifier to the tree
-	attach_node((yyval.node), (yyvsp[-1].node)); //adds stat to the tree
-}
-#line 1507 "sl_parser.c" /* yacc.c:1646  */
+			if(debug==1)printf("going up\n");
+			(yyval.node) = (yyvsp[0].node);}
+#line 1603 "savannah.tab.c" /* yacc.c:1646  */
     break;
 
   case 30:
-#line 236 "sl_parser.y" /* yacc.c:1646  */
+#line 283 "savannah.y" /* yacc.c:1646  */
     {
-	(yyval.node) = make_node(IF, 0, "");
-	attach_node((yyval.node), (yyvsp[-4].node)); //adds identifier to the tree
-	attach_node((yyval.node), (yyvsp[-2].node)); //adds stat to the tree
-
-	(yyval.node) = make_node(ELSE, 0, "");
-	attach_node((yyval.node), (yyvsp[0].node)); //adds identifier to the tree
-}
-#line 1520 "sl_parser.c" /* yacc.c:1646  */
+					if(debug==1)printf("if\n");
+					(yyval.node) = make_node(IF, 0, "");
+					attach_node((yyval.node), (yyvsp[-2].node));
+					attach_node((yyval.node), (yyvsp[0].node));
+				}
+#line 1614 "savannah.tab.c" /* yacc.c:1646  */
     break;
 
   case 31:
-#line 245 "sl_parser.y" /* yacc.c:1646  */
-    { (yyval.node) = make_node(IDENTIFIER, 0, "");}
-#line 1526 "sl_parser.c" /* yacc.c:1646  */
+#line 293 "savannah.y" /* yacc.c:1646  */
+    {
+					fflush(stdout);
+					if(debug==1)printf("assign\n");
+					(yyval.node) = make_node(ASSIGN, 0 ,"");
+					if(debug==1)printf("makes the assignment node");
+					fflush(stdout);
+					if(debug==1)printf("created node\n");
+					fflush(stdout);
+					attach_node((yyval.node), (yyvsp[-3].node)); //adds identifier to the tree
+					if(debug==1)printf("attached node\n");
+					fflush(stdout);
+					attach_node((yyval.node), (yyvsp[-1].node)); //adds stat to the tree
+					if(debug==1)printf("attached or");
+					fflush(stdout);
+				}
+#line 1634 "savannah.tab.c" /* yacc.c:1646  */
     break;
 
   case 32:
-#line 248 "sl_parser.y" /* yacc.c:1646  */
+#line 311 "savannah.y" /* yacc.c:1646  */
     {
-	(yyval.node) = make_node(WHILE, 0, "");
-	attach_node((yyval.node), (yyvsp[-2].node));
-	attach_node((yyval.node), (yyvsp[0].node));
-}
-#line 1536 "sl_parser.c" /* yacc.c:1646  */
+					if(debug==1)printf("ifelse\n");
+					(yyval.node) = make_node(IF, 0, "");
+					attach_node((yyval.node), (yyvsp[-4].node)); //adds identifier to the tree
+					attach_node((yyval.node), (yyvsp[-2].node)); //adds stat to the tree
+					attach_node((yyval.node), (yyvsp[0].node)); //adds identifier to the tree
+				}
+#line 1646 "savannah.tab.c" /* yacc.c:1646  */
     break;
 
   case 33:
-#line 255 "sl_parser.y" /* yacc.c:1646  */
+#line 321 "savannah.y" /* yacc.c:1646  */
     {
-	(yyval.node)=make_node(PRINT, 0, ""); 
-	attach_node((yyval.node), (yyvsp[-1].node));
-}
-#line 1545 "sl_parser.c" /* yacc.c:1646  */
+					if(debug==1)printf("while\n");
+					(yyval.node) = make_node(WHILE, 0, "");
+					attach_node((yyval.node), (yyvsp[-2].node));
+					attach_node((yyval.node), (yyvsp[0].node));
+				}
+#line 1657 "savannah.tab.c" /* yacc.c:1646  */
     break;
 
   case 34:
-#line 260 "sl_parser.y" /* yacc.c:1646  */
-    {(yyval.node)=make_node(VALUE, 0, "");}
-#line 1551 "sl_parser.c" /* yacc.c:1646  */
+#line 330 "savannah.y" /* yacc.c:1646  */
+    {
+					if(debug==1)printf("print\n");
+					(yyval.node)=make_node(PRINT, 0, ""); 
+					attach_node((yyval.node), (yyvsp[-1].node));
+				}
+#line 1667 "savannah.tab.c" /* yacc.c:1646  */
     break;
 
   case 35:
-#line 264 "sl_parser.y" /* yacc.c:1646  */
-    { (yyval.node) = (yyvsp[-1].node);}
-#line 1557 "sl_parser.c" /* yacc.c:1646  */
+#line 337 "savannah.y" /* yacc.c:1646  */
+    {
+		 	if(debug==1)printf("val\n");
+			 (yyval.node)=make_node(VALUE, yylval.Double, "");
+		 }
+#line 1676 "savannah.tab.c" /* yacc.c:1646  */
     break;
 
   case 36:
-#line 266 "sl_parser.y" /* yacc.c:1646  */
-    {}
-#line 1563 "sl_parser.c" /* yacc.c:1646  */
+#line 347 "savannah.y" /* yacc.c:1646  */
+    {
+			if(debug==1)printf("input");
+			(yyval.node)=make_node(INPUT, 0,"");
+		}
+#line 1685 "savannah.tab.c" /* yacc.c:1646  */
     break;
 
   case 37:
-#line 267 "sl_parser.y" /* yacc.c:1646  */
-    {}
-#line 1569 "sl_parser.c" /* yacc.c:1646  */
+#line 355 "savannah.y" /* yacc.c:1646  */
+    {
+				if(debug==1)printf("starting sequence");
+				(yyval.node) = (yyvsp[-1].node);
+			}
+#line 1694 "savannah.tab.c" /* yacc.c:1646  */
     break;
 
   case 38:
-#line 269 "sl_parser.y" /* yacc.c:1646  */
-    {tree =(yyvsp[0].node);}
-#line 1575 "sl_parser.c" /* yacc.c:1646  */
+#line 361 "savannah.y" /* yacc.c:1646  */
+    {
+				if(debug==1)printf("Making a statement \n");
+				(yyval.node) = make_node(STATEMENT, 0, "");
+				attach_node((yyval.node), (yyvsp[0].node));
+			 }
+#line 1704 "savannah.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 39:
+#line 367 "savannah.y" /* yacc.c:1646  */
+    {
+				if(debug==1)printf("Making statements\n");
+				(yyval.node) = make_node(STATEMENT, 0, "");
+				attach_node((yyval.node), (yyvsp[-1].node));
+				attach_node((yyval.node), (yyvsp[0].node));
+			 }
+#line 1715 "savannah.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 40:
+#line 376 "savannah.y" /* yacc.c:1646  */
+    {
+			   if(debug==1)printf("IN PROGRAM\n");
+			   tree = (yyvsp[0].node); 
+			   if(debug==1)printf("added element to tree\n");
+		   }
+#line 1725 "savannah.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 41:
+#line 383 "savannah.y" /* yacc.c:1646  */
+    {
+		  	if(debug==1)printf("iden\n");
+		  	(yyval.node) = make_node(IDENTIFIER, 0, yylval.char_array);
+		  }
+#line 1734 "savannah.tab.c" /* yacc.c:1646  */
     break;
 
 
-#line 1579 "sl_parser.c" /* yacc.c:1646  */
+#line 1738 "savannah.tab.c" /* yacc.c:1646  */
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires
@@ -1803,41 +1962,224 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 271 "sl_parser.y" /* yacc.c:1906  */
+#line 388 "savannah.y" /* yacc.c:1906  */
+
+
+ /*
+ * It will handle the node types that produce a value such as 
+ * identifiers, values, inputs, and arithmetic / logical operators. For 
+ * expression nodes that have children, it will need to recursively 
+ * evaluate those expressions. */
+double eval_expression(struct Node* node){
+/*Takes a parse tree node, and returns the value of the expression it 
+ * represents. 
+ */
+	
+    double arg1, arg2 = 0;
+	switch(node->type){
+    	case VALUE: return node->value;
+    	case IDENTIFIER: return node->value;
+    	case INPUT: return node->value;//need to read in user input somehow
+   		case PLUS: 
+			
+        	arg1 = eval_expression(node->children[0]);
+        	arg2 = eval_expression(node->children[1]);
+			return arg1 + arg2;
+   		case MINUS:
+        	arg1 = eval_expression(node->children[0]);
+        	arg2 = eval_expression(node->children[1]);
+			return arg1 - arg2;
+   		case DIVIDE:
+        	arg1 = eval_expression(node->children[0]);
+        	arg2 = eval_expression(node->children[1]);
+			return arg1 / arg2;
+   		case TIMES:
+        	arg1 = eval_expression(node->children[0]);
+        	arg2 = eval_expression(node->children[1]);
+			return arg1 * arg2;
+   		case LESS:
+        	arg1 = eval_expression(node->children[0]);
+        	arg2 = eval_expression(node->children[1]);
+			if (arg1 < arg2){
+				return 1;
+			}else{
+				return 0;
+			}
+   		case GREATER:
+        	arg1 = eval_expression(node->children[0]);
+        	arg2 = eval_expression(node->children[1]);
+			if (arg1 > arg2){
+				return 1;
+			}else{
+				return 0;
+			}
+   		case LESSEQ:
+        	arg1 = eval_expression(node->children[0]);
+        	arg2 = eval_expression(node->children[1]);
+			if (arg1 <= arg2){
+				return 1;
+			}else{
+				return 0;
+			}
+   		case GREATEREQ:
+        	arg1 = eval_expression(node->children[0]);
+        	arg2 = eval_expression(node->children[1]);
+			if (arg1 >= arg2){
+				return 1;
+			}else{
+				return 0;
+			}
+   		case EQUALS:   
+        	arg1 = eval_expression(node->children[0]);
+        	arg2 = eval_expression(node->children[1]);
+			if (arg1 == arg2){
+				return 1;
+			}else{
+				return 0;
+			}
+   		case NEQUALS:   
+        	arg1 = eval_expression(node->children[0]);
+        	arg2 = eval_expression(node->children[1]);
+			if (arg1 != arg2){
+				return 1;
+			}else{
+				return 0;
+			}
+   		case AND:   
+        	arg1 = eval_expression(node->children[0]);
+        	arg2 = eval_expression(node->children[1]);
+			if (arg1 && arg2){
+				return 1;
+			}else{
+				return 0;
+			}
+   		case OR:    
+        	arg1 = eval_expression(node->children[0]);
+        	arg2 = eval_expression(node->children[1]);
+			if (arg1 || arg2){
+				return 1;
+			}else{
+				return 0;
+			}
+   		case NOT:   
+        	arg1 = eval_expression(node->children[0]);
+			if (!arg1){
+				return 1;
+			}else{
+				return 0;
+			}	
+
+ 		 default:
+ 		    printf("Error, %d not a valid node type.\n", node->type);
+ 		    exit(1);
+	}
+}
+
+
+
+
+
+
+
+
+void eval_statement(struct Node* node){
+	int i, j = 0;
+	double a;
+	
+	struct var *currentVar;
+	
+	 switch(node->type) {//for every possible node type, find the value
+	   case IDENTIFIER:
+			for(j = 0; j <sizeof(node->id); j++){
+				currentVar->name[j] = node->id[j];}//this is here so that the name can be stored in the vars array
+			currentVar->value = eval_expression(node);break;
+	   case ASSIGN: 
+		//first child must always be an identifier, second child must be a value
+			for(i = 0; i<node->num_children; i++){
+				eval_statement(node->children[i]);
+			}
+			break;
+	   case IF: 
+			if(eval_expression(node->children[0])){//statement to be evaluated
+				currentVar->value = eval_expression(node->children[1]); //statement to be executed if expr above is true
+			}else{
+				if(node->children[2]){ //else case, if a third child exists
+				currentVar->value = eval_expression(node->children[2]); //if a third child exists, evaluate it
+				}
+			}
+			break;
+	   case WHILE: 
+			while(eval_expression(node->children[0])){//statement to be evaluated
+				currentVar->value = eval_expression(node->children[1]); //statement to be executed while expr above is true
+			}
+			break;
+	   case PRINT://should only have one child? and it should always be an expression?
+			printf("wtf\n");
+			a = eval_expression(node->children[0]);
+			printf("the current value is %lf", a);
+			break;
+	   case STATEMENT: //for each existing child, evaluate it
+			for(i = 0; i<node->num_children; i++){
+				eval_statement(node->children[i]);
+			}
+			break;
+	   default:
+			currentVar->value = eval_expression(node);break;
+	}
+	//vars[i] = currentVar;//stores anything saved as the currentVar in the vars array
+
+}
+
+
+/*Takes a parse tree node, and evaluates the statement it represents. 
+ * Most of the statement types contain statements and/or expressions as 
+ * children nodes. These will have to be handled recursively. */
+                                                                
+
+
+
+
+
 
 void print_tree(struct Node* node, int tabs) {
   int i;
+  if(debug==1)printf("entering print tree \n");	
 
   /* base case */
-  if(!node) return;
+  if(!node){ printf("no node \n"); return;}
 
   /* print leading tabs */
   for(i = 0; i < tabs; i++) {
-     printf(" ");
+	 //if(debug==1)printf("entering for loop \n");
+	 printf("   " );
+     //if(debug==1)printf("end for loop \n");
+	 fflush(stdout);
   }
+  if(debug==1)printf("out of for loop\n");
+
 
   switch(node->type) {
-    case IDENTIFIER: printf("IDENTIFIER: %s\n", node->id); break;
-    case VALUE: printf("VALUE: %lf\n", node->value); break;
-    case PLUS: printf("PLUS:\n"); break;
-    case MINUS: printf("MINUS:\n"); break;
-    case DIVIDE: printf("DIVIDE:\n"); break;
-    case TIMES: printf("TIMES:\n"); break;
-    case LESS: printf("LESS THAN:\n"); break;
-    case GREATER: printf("GREATER:\n"); break;
-    case LESSEQ: printf("LESS EQUAL:\n"); break;
-    case GREATEREQ: printf("GREATER EQUAL:\n"); break;
-    case EQUALS: printf("EQUALS:\n"); break;
-    case NEQUALS: printf("NOT EQUALS:\n"); break;
-    case AND: printf("AND:\n"); break;
-    case OR: printf("OR:\n"); break;
-    case NOT: printf("NOT:\n"); break;
-    case ASSIGN: printf("ASSIGN:\n"); break;
-    case IF: printf("IF:\n"); break;
-    case WHILE: printf("WHILE:\n"); break;
-    case PRINT: printf("PRINT:\n"); break;
-    case INPUT: printf("INPUT:\n"); break;
-    case STATEMENT: printf("STATEMENT:\n"); break;
+    case IDENTIFIER : printf("IDENTIFIER: %s\n", node->id); break;
+    case VALUE      : printf("VALUE: %lf\n", node->value); break;
+    case PLUS       : printf("PLUS: \n"); break;
+    case MINUS      : printf("MINUS: \n"); break;
+    case DIVIDE     : printf("DIVIDE: \n"); break;
+    case TIMES      : printf("TIMES: \n"); break;
+    case LESS       : printf("LESS THAN: \n"); break;
+    case GREATER    : printf("GREATER: \n"); break;
+    case LESSEQ     : printf("LESS EQUAL: \n"); break;
+    case GREATEREQ  : printf("GREATER EQUAL: \n"); break;
+    case EQUALS     : printf("EQUALS: \n"); break;
+    case NEQUALS    : printf("NOT EQUALS: \n"); break;
+    case AND        : printf("AND: \n"); break;
+    case OR         : printf("OR: \n"); break;
+    case NOT        : printf("NOT: \n"); break;
+    case ASSIGN     : printf("ASSIGN: \n"); break;
+    case IF         : printf("IF: \n"); break;
+    case WHILE      : printf("WHILE: \n"); break;
+    case PRINT      : printf("PRINT: \n"); break;
+    case INPUT      : printf("INPUT: \n"); break;
+    case STATEMENT  : printf("STATEMENT: \n"); break;
     default:
       printf("Error, %d not a valid node type.\n", node->type);
       exit(1);
@@ -1845,6 +2187,7 @@ void print_tree(struct Node* node, int tabs) {
 
   /* print all children nodes underneath */
   for(i = 0; i < node->num_children; i++) {
+ 	//if(debug==1){printf("in for at element %d \n", i );}
     print_tree(node->children[i], tabs + 1);
   }
 }
@@ -1854,12 +2197,19 @@ int yywrap( ) {
 }
 
 void yyerror(const char* str) {
-//  fprintf(stderr, "Compiler error: '%s'.\n", str);
+  fprintf(stderr, "Compiler error: '%s'.\n", str);
 }
 
-int main()
+int main(int argc, char* argv[])
 { 
-	//tree = yyparse();
-	print_tree(tree, 0);// (tree to feed in, num tabs it will print out with) 
+
+	if(debug==1){printf("In main \n");}
+	if(!argv[1]){printf("No file entered \n"); return 0;}
+	stdin = fopen(argv[1], "r");    
+	yyparse();
+	print_tree(tree, 1);// (tree to feed in, num tabs it will print out with) 
+	printf("WE ARE OUT OF PRINT TREE");
+	eval_statement(tree);
+	if(debug==1){printf("leaving main \n");}
 	return 0; 
 }

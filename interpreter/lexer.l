@@ -1,5 +1,5 @@
 %{
-include "sl_parser.tab.h"
+#include "sl_parser.tab.h"
 %}
 
 %option noyywrap
